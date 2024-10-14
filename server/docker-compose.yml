@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/home/app
+    environment:
+      - STREAM_KEY_YT=${STREAM_KEY_YT}
+    ports:
+      - 3000:3000
