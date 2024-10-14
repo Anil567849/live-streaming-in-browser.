@@ -1,6 +1,7 @@
+import { spawn } from 'child_process'
 
 const BASE_URL_YT = "rtmp://a.rtmp.youtube.com/live2";
-export const options = [
+const options = [
     '-i',
     '-',
     '-c:v', 'libx264',
@@ -20,3 +21,21 @@ export const options = [
     '-f', 'flv',
     `${BASE_URL_YT}/${process.env.STREAM_KEY_YT}`,
 ];
+
+export function initFfmpegProcess(){
+    const ffmpegProcess = spawn('ffmpeg', options);
+
+    ffmpegProcess.stdout.on('data', (data) => {
+        console.log(`ffmpeg stdout: ${data}`);
+    });
+
+    ffmpegProcess.stderr.on('data', (data) => {
+        console.error(`ffmpeg stderr: ${data}`);
+    });
+
+    ffmpegProcess.on('close', (code) => {
+        console.log(`ffmpeg process exited with code ${code}`);
+    });
+    
+    return ffmpegProcess;
+}

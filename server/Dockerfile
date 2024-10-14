@@ -19,10 +19,13 @@ RUN apt-get install -y nodejs
 # Install ffmpeg
 RUN apt-get install -y ffmpeg
 
-# Install nodemon
-RUN npm i -g nodemon
-
 # Set working directory
 WORKDIR /home/app
 
-CMD nodemon index.js
+COPY index.js index.js
+COPY package*.json .
+COPY lib/ lib/
+
+RUN npm install
+
+CMD node index.js
