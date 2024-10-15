@@ -8,17 +8,23 @@ function Home() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch('http://localhost:8000/api/yt-stream-key', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'  // Set the Content-Type header
-            },
-            body: JSON.stringify({key: streamKey})
-        })
-        const {data} = await res.json();
-    
-        if(data == 'ok'){
-            setStreamKeyExist(true);
+        try {
+
+            const res = await fetch('http://localhost:8000/api/yt-stream-key', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'  // Set the Content-Type header
+                },
+                body: JSON.stringify({key: streamKey})
+            })
+            const {data} = await res.json();
+        
+            if(data == 'ok'){
+                setStreamKeyExist(true);
+            }
+            
+        } catch (error) {
+            alert("something went wrong")
         }
     };
 

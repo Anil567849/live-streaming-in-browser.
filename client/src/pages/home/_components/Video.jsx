@@ -14,10 +14,12 @@ function LiveStream() {
     useEffect(() => {
         if(!mediaRecorder) return;
         // When data is available, send it to the server
+        console.log(socket);
+        
         mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0 && socket && socket.connected) {
                 socket.emit("binarystream", event.data); // Send the Blob containing video/audio data
-                // console.log("binarystream", event.data); // Send the Blob containing video/audio data
+                console.log("binarystream", event.data); // Send the Blob containing video/audio data
             }
         };
 
